@@ -1,0 +1,457 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+############## Show the databases name that are presents in your local machine .
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amitdb             |
+| college            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| puspita            |
+| puspitadb          |
+| puspitagiri        |
+| sys                |
+| teacher            |
++--------------------+
+10 rows in set (0.00 sec)
+
+############### Create a table ( table name is teacher) under college database.
+
+mysql> use college;
+Database changed
+mysql> create table teacher(T_ID int, T_Name Varchar(25), Subject Varchar(50), DOJ int, Salary int, Workload int, Gender char);
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| teacher           |
++-------------------+
+1 row in set (0.00 sec)
+
+############### Insert the following values.
+
+mysql> Insert Into teacher(T_ID,T_name,Subject,DOJ,Salary,Workload,Gender)Values(101,"Suman","English",str_to_date('12-03-2012','%d-%m-%Y'),55000,20,"F"),(103,"Ravi","History",str_to_date('12-06-2000','%d-%m-%Y'),70000,22,"M"),(104,"Alok","computer",str_to_date('07-02-2014','%d-%m-%Y'),60000,21,"M"),(105,"Rani","English",str_to_date('06-06-2015','%d-%m-%Y'),50000,NULL,"F");
+Query OK, 4 rows affected (0.05 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc teacher;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| T_ID     | int         | YES  |     | NULL    |       |
+| T_Name   | varchar(25) | YES  |     | NULL    |       |
+| Subject  | varchar(50) | YES  |     | NULL    |       |
+| DOJ      | int         | YES  |     | NULL    |       |
+| Salary   | int         | YES  |     | NULL    |       |
+| Workload | int         | YES  |     | NULL    |       |
+| Gender   | char(1)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from teacher;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  103 | Ravi   | History  | 20000612 |  70000 |       22 | M      |
+|  104 | Alok   | computer | 20140207 |  60000 |       21 | M      |
+|  105 | Rani   | English  | 20150606 |  50000 |     NULL | F      |
++------+--------+----------+----------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+############### Where T_ID is primary key .
+
+mysql> show columns from teacher;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| T_ID     | int         | YES  |     | NULL    |       |
+| T_Name   | varchar(25) | YES  |     | NULL    |       |
+| Subject  | varchar(50) | YES  |     | NULL    |       |
+| DOJ      | int         | YES  |     | NULL    |       |
+| Salary   | int         | YES  |     | NULL    |       |
+| Workload | int         | YES  |     | NULL    |       |
+| Gender   | char(1)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE teacher
+    -> add primary key (T_ID);
+Query OK, 0 rows affected (0.18 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+############ Describe the table .
+
+mysql> desc teacher;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| T_ID     | int         | NO   | PRI | NULL    |       |
+| T_Name   | varchar(25) | YES  |     | NULL    |       |
+| Subject  | varchar(50) | YES  |     | NULL    |       |
+| DOJ      | int         | YES  |     | NULL    |       |
+| Salary   | int         | YES  |     | NULL    |       |
+| Workload | int         | YES  |     | NULL    |       |
+| Gender   | char(1)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+############## Select all the values from the table.
+
+mysql> select * from teacher;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  103 | Ravi   | History  | 20000612 |  70000 |       22 | M      |
+|  104 | Alok   | computer | 20140207 |  60000 |       21 | M      |
+|  105 | Rani   | English  | 20150606 |  50000 |     NULL | F      |
++------+--------+----------+----------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+##############Display the teacher name of computer teacher
+
+mysql> select T_Name from teacher where subject = "computer";
++--------+
+| T_Name |
++--------+
+| Alok   |
++--------+
+1 row in set (0.00 sec)
+
+################### Display of the teacher whose workload is 20.
+
+mysql> select * from teacher where workload = 20;
++------+--------+---------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject | DOJ      | Salary | Workload | Gender |
++------+--------+---------+----------+--------+----------+--------+
+|  101 | Suman  | English | 20120312 |  55000 |       20 | F      |
++------+--------+---------+----------+--------+----------+--------+
+1 row in set (0.00 sec)
+
+############## .Display the total number of English teacher
+
+mysql> select count(*) from teacher where subject = "English";
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.01 sec)
+
+############# Increase the salary of history teacher by 10%
+
+mysql> update teacher set salary = salary + 10/100 * salary where subject = "History";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> desc teacher;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| T_ID     | int         | NO   | PRI | NULL    |       |
+| T_Name   | varchar(25) | YES  |     | NULL    |       |
+| Subject  | varchar(50) | YES  |     | NULL    |       |
+| DOJ      | int         | YES  |     | NULL    |       |
+| Salary   | int         | YES  |     | NULL    |       |
+| Workload | int         | YES  |     | NULL    |       |
+| Gender   | char(1)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from teacher;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      |
+|  104 | Alok   | computer | 20140207 |  60000 |       21 | M      |
+|  105 | Rani   | English  | 20150606 |  50000 |     NULL | F      |
++------+--------+----------+----------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+############## Display the teacher details with maximum work load
+
+mysql> select * from teacher where workload = (select max(workload) from teacher);
++------+--------+---------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject | DOJ      | Salary | Workload | Gender |
++------+--------+---------+----------+--------+----------+--------+
+|  103 | Ravi   | History | 20000612 |  77000 |       22 | M      |
++------+--------+---------+----------+--------+----------+--------+
+1 row in set (0.00 sec)
+
+############# .Display details of teachers in increasing order of salary
+
+mysql> select * from teacher order by salary;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  105 | Rani   | English  | 20150606 |  50000 |     NULL | F      |
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  104 | Alok   | computer | 20140207 |  60000 |       21 | M      |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      |
++------+--------+----------+----------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+############# Display the salary of Alok
+
+mysql> select salary from teacher where T_Name = "Alok";
++--------+
+| salary |
++--------+
+|  60000 |
++--------+
+1 row in set (0.00 sec)
+
+########### Display the total salary paid to english teacher.
+
+mysql> select sum(salary) from teacher where subject = "English";
++-------------+
+| sum(salary) |
++-------------+
+|      105000 |
++-------------+
+1 row in set (0.00 sec)
+
+############ Display the details of all female teachers.
+
+mysql> select * from teacher where Gender = "F";
++------+--------+---------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject | DOJ      | Salary | Workload | Gender |
++------+--------+---------+----------+--------+----------+--------+
+|  101 | Suman  | English | 20120312 |  55000 |       20 | F      |
+|  105 | Rani   | English | 20150606 |  50000 |     NULL | F      |
++------+--------+---------+----------+--------+----------+--------+
+2 rows in set (0.00 sec)
+
+############# .Display the details of the all teachers whose DOJ between 2003 to 2013.
+
+mysql> select * from teacher where DOJ = 2003 - 2013;
+Empty set (0.00 sec)
+
+mysql> select * from teacher;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      |
+|  104 | Alok   | computer | 20140207 |  60000 |       21 | M      |
+|  105 | Rani   | English  | 20150606 |  50000 |     NULL | F      |
++------+--------+----------+----------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from teacher where DOJ < "2003" > "2013";
+Empty set (0.00 sec)
+
+############ Display the female teacher whose salary more than 60000.
+
+mysql> select * from teacher where salary > 60000 and gender = "F";
+Empty set (0.00 sec)
+
+mysql> select * from teacher where salary > 60000 and gender = "M";
++------+--------+---------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject | DOJ      | Salary | Workload | Gender |
++------+--------+---------+----------+--------+----------+--------+
+|  103 | Ravi   | History | 20000612 |  77000 |       22 | M      |
++------+--------+---------+----------+--------+----------+--------+
+1 row in set (0.00 sec)
+
+############## Display the average salary from teacher table
+
+mysql> select avg(salary) from teacher;
++-------------+
+| avg(salary) |
++-------------+
+|  60500.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+############## Sort the teacher table by name by increasing and decreasing order.
+
+mysql> select * from teacher order by salary;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  105 | Rani   | English  | 20150606 |  50000 |     NULL | F      |
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  104 | Alok   | computer | 20140207 |  60000 |       21 | M      |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      |
++------+--------+----------+----------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+
+mysql> select * from teacher order by salary Desc;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      |
+|  104 | Alok   | computer | 20140207 |  60000 |       21 | M      |
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  105 | Rani   | English  | 20150606 |  50000 |     NULL | F      |
++------+--------+----------+----------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+############# Rename the teacher table name to teachers.
+
+mysql> rename table teacher to teachers;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc teachers;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| T_ID     | int         | NO   | PRI | NULL    |       |
+| T_Name   | varchar(25) | YES  |     | NULL    |       |
+| Subject  | varchar(50) | YES  |     | NULL    |       |
+| DOJ      | int         | YES  |     | NULL    |       |
+| Salary   | int         | YES  |     | NULL    |       |
+| Workload | int         | YES  |     | NULL    |       |
+| Gender   | char(1)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+################## Delete all the values from the teacher table whose name is rani .
+
+mysql> Delete from teachers where T_Name = "Rani";
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select  * from teachers;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      |
+|  104 | Alok   | computer | 20140207 |  60000 |       21 | M      |
++------+--------+----------+----------+--------+----------+--------+
+3 rows in set (0.00 sec)
+
+############ Update the workload by 30 whose T_id is 104.
+
+mysql> update teachers set workload = 30 where T_ID = 104;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from teachers;
++------+--------+----------+----------+--------+----------+--------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender |
++------+--------+----------+----------+--------+----------+--------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      |
+|  104 | Alok   | computer | 20140207 |  60000 |       30 | M      |
++------+--------+----------+----------+--------+----------+--------+
+3 rows in set (0.00 sec)
+
+############# Add a new column in teacher table (column name is address ).
+
+mysql> alter table teachers add(address varchar(30));
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from teachers;
++------+--------+----------+----------+--------+----------+--------+---------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender | address |
++------+--------+----------+----------+--------+----------+--------+---------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      | NULL    |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      | NULL    |
+|  104 | Alok   | computer | 20140207 |  60000 |       30 | M      | NULL    |
++------+--------+----------+----------+--------+----------+--------+---------+
+3 rows in set (0.00 sec)
+
+########### nsert all the values fro address table .
+
+mysql> update teachers set address = "Namkhana" where T_ID = 101;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from teachers;
++------+--------+----------+----------+--------+----------+--------+----------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender | address  |
++------+--------+----------+----------+--------+----------+--------+----------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      | Namkhana |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      | NULL     |
+|  104 | Alok   | computer | 20140207 |  60000 |       30 | M      | NULL     |
++------+--------+----------+----------+--------+----------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> update teachers set address = "Kolkata" where T_ID = 103;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from teachers;
++------+--------+----------+----------+--------+----------+--------+----------+
+| T_ID | T_Name | Subject  | DOJ      | Salary | Workload | Gender | address  |
++------+--------+----------+----------+--------+----------+--------+----------+
+|  101 | Suman  | English  | 20120312 |  55000 |       20 | F      | Namkhana |
+|  103 | Ravi   | History  | 20000612 |  77000 |       22 | M      | Kolkata  |
+|  104 | Alok   | computer | 20140207 |  60000 |       30 | M      | NULL     |
++------+--------+----------+----------+--------+----------+--------+----------+
+3 rows in set (0.00 sec)
+
+############# Evaluate the length of “India” .
+
+mysql> select length("INDIA")as length_of_string;
++------------------+
+| length_of_string |
++------------------+
+|                5 |
++------------------+
+1 row in set (0.00 sec)
+
+############## Repeat ‘$’ 20 times.
+
+mysql> select repeat("$",20);
++----------------------+
+| repeat("$",20)       |
++----------------------+
+| $$$$$$$$$$$$$$$$$$$$ |
++----------------------+
+1 row in set (0.00 sec)
+
+############### Concat the following words to a strings “I”,”Play”,”Cricket”.
+
+mysql> select concat("I", "Play", "Cricket");
++--------------------------------+
+| concat("I", "Play", "Cricket") |
++--------------------------------+
+| IPlayCricket                   |
++--------------------------------+
+1 row in set (0.00 sec)
+
+################## Display the current time .
+
+mysql> select curtime();
++-----------+
+| curtime() |
++-----------+
+| 02:40:57  |
++-----------+
+1 row in set (0.00 sec)
+
+################ Display the current date and time
+
+mysql> select current_timestamp();
++---------------------+
+| current_timestamp() |
++---------------------+
+| 2023-04-04 02:41:38 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql>
